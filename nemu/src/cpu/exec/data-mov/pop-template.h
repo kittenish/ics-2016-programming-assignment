@@ -1,0 +1,14 @@
+#include "cpu/exec/template-start.h"
+#define instr pop
+
+#if DATA_BYTE == 2 || DATA_BYTE == 4
+make_helper(concat(pop_rm_,SUFFIX))
+{
+	int len = concat(decode_r_,SUFFIX)(eip+1);
+	OPERAND_W(op_src,swaddr_read(cpu.esp,4,3));
+	REG(R_ESP) = REG(R_ESP) + DATA_BYTE;
+	print_asm_template1();
+	return len+1;
+}
+#endif
+#include "cpu/exec/template-end.h"

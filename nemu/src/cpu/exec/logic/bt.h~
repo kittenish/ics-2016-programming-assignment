@@ -1,0 +1,7 @@
+#ifndef __BITTEST_H__
+#define __BITTEST_H__
+
+make_helper(bittest_r2rm_v);
+
+
+#endif

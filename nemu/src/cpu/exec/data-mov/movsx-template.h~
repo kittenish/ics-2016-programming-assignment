@@ -1,0 +1,42 @@
+#include "cpu/exec/template-start.h"
+
+#define instr movsx
+
+static void  do_execute()
+{
+	/*int leng = DATA_BYTE << 3;
+	int32_t result = op_src->val;
+	int first = 0;
+	if ((DATA_TYPE_S)op_src->val < 0)
+		first = 1;
+	int i=leng;	
+	//printf ("%d %d",leng , first);
+	for (;i < 8 * sizeof(op_dest->val) ;i++)
+		result = result | (first<<i);
+	//printf(" %x ",temp);
+	//swaddr_write (op_dest, 4, 0); wrong
+	//OPERAND_W(op_dest,0x12);      only write 1 byte
+	write_operand_l(op_dest,result);
+	print_asm_template2();
+	*/
+
+	/*int32_t tmp = op_src->val;
+	int32_t step = 32 - 8*DATA_BYTE;
+	tmp = tmp<<step>>step;
+#if DATA_BYTE == 1
+	if(ops_decoded.is_data_size_16)
+		reg_w(op_dest->reg) = tmp;
+	else
+		reg_l(op_dest->reg) = tmp;
+#elif DATA_BYTE == 2
+		reg_l(op_dest->reg) = tmp;
+#endif*/
+	DATA_TYPE_S res = (DATA_TYPE_S)op_src->val;
+	reg_l(op_dest->reg) = res;
+		print_asm_template2();
+}
+
+
+make_instr_helper(rm2r)
+
+#include "cpu/exec/template-end.h"

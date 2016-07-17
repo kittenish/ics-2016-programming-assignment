@@ -1,0 +1,47 @@
+#include "cpu/exec/template-start.h"
+
+#define instr set
+
+static void do_execute()
+{
+	DATA_TYPE opcode = instr_fetch(cpu.eip + 1, 1);
+	if (opcode == 0x90 && cpu.EFLAGS.OF == 1)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x91 && cpu.EFLAGS.OF == 0)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x92 && cpu.EFLAGS.CF == 1)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x93 && cpu.EFLAGS.CF == 0)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x94 && cpu.EFLAGS.ZF == 1)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x95 && cpu.EFLAGS.ZF == 0)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x96 && (cpu.EFLAGS.CF == 1 || cpu.EFLAGS.ZF == 1))
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x97 && cpu.EFLAGS.CF == 0 && cpu.EFLAGS.ZF == 0)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x98 && cpu.EFLAGS.SF == 1)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x99 && cpu.EFLAGS.SF == 0)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x9a && cpu.EFLAGS.PF == 1)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x9b && cpu.EFLAGS.PF == 0)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x9c && cpu.EFLAGS.SF != cpu.EFLAGS.OF)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x9d && cpu.EFLAGS.SF == cpu.EFLAGS.OF)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x9e && cpu.EFLAGS.ZF == 1 && cpu.EFLAGS.SF != cpu.EFLAGS.OF)
+		OPERAND_W (op_src , 0x1);
+	else if (opcode == 0x9f && (cpu.EFLAGS.ZF == 0 || cpu.EFLAGS.SF == cpu.EFLAGS.OF))
+		OPERAND_W (op_src , 0x1);
+	else 
+		OPERAND_W (op_src , 0x0);
+	print_asm_template1();
+}
+
+make_instr_helper(rm)
+
+#include "cpu/exec/template-end.h"

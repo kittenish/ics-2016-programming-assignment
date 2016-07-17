@@ -1,0 +1,73 @@
+#include "monitor/watchpoint.h"
+#include "monitor/expr.h"
+
+#define NR_WP 32
+
+static WP wp_list[NR_WP];
+static WP *head, *free_;
+
+void init_wp_list() {
+	int i;
+	for(i = 0; i < NR_WP; i ++) {
+		wp_list[i].NO = i;
+		wp_list[i].next = &wp_list[i + 1];
+	}
+	wp_list[NR_WP - 1].next = NULL;
+
+	head = NULL;
+	free_ = wp_list;
+}
+WP *new_wp(char *e)
+{
+	if(head==NULL)
+	{
+		head=free_;
+		free_=free_->next;
+		head->next=NULL;
+		head->expr=e;
+		printf("Set watchpoint %d successfully!\n",p->NO+1);
+		return head;
+	}
+	else
+	{//printf("%s ",head->expr);
+		WP *p;
+		p=head;
+		while(p->next!=NULL)
+			p=p->next;
+		if(free_->next==NULL)
+			assert(0);
+		else
+		{
+			p->next=free_;
+			free_->next=NULL;
+			free_=free_->next;
+		}
+		p=p->next;
+		p->expr=e;
+		printf("Set watchpoint %d successfully!\n",p->NO+1);
+		return p;
+	}
+}
+void free_wp(WP *wp)
+{
+	WP *p=head;
+	while(1)
+	{
+		if(p->next==wp)
+			break;
+		else 
+			p=p->next;
+	}
+	p->next=wp->next;
+	wp->next=free_;
+	free_=wp;
+}
+
+WP * gethead()
+{
+	return head;
+}
+
+/* TODO: Implement the functionality of watchpoint */
+
+

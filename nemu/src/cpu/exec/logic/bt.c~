@@ -1,0 +1,14 @@
+#include "cpu/exec/helper.h"
+
+#define DATA_BYTE 2
+#include "bittest-template.h"
+#undef DATA_BYTE
+
+#define DATA_BYTE 4
+#include "bittest-template.h"
+#undef DATA_BYTE
+
+/* for instruction encoding overloading */
+
+make_helper_v(bittest_r2rm)
+
